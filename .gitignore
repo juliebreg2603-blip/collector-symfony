@@ -1,4 +1,7 @@
 
+# Visual Studio
+/.vs/
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
