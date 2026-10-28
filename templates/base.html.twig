@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}collect'OR{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2290%22>📀</text></svg>">
+        
+        <style>
+            :root { --gold-gradient: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C); }
+            body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; }
+            nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: #000; border-bottom: 1px solid #BF953F; position: relative; z-index: 1000; }
+            .logo { font-size: 24px; font-weight: bold; text-decoration: none; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+            .nav-links { display: flex; align-items: center; gap: 20px; }
+            .nav-links a { color: #fff; text-decoration: none; font-size: 14px; }
+            .btn-inscription { border: 1px solid #fff; padding: 5px 15px; border-radius: 20px; }
+            .btn-connexion { background: var(--gold-gradient); color: #000 !important; padding: 5px 20px; border-radius: 20px; font-weight: bold; }
+            .container { padding: 0; margin: 0; }
+        </style>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <nav>
+            {# On remet le lien vers l'accueil principal #}
+            <a href="/collector_website/public/index.php/" class="logo">collect'OR</a>
+          <div class="nav-links">
+    {# Liens directs pour éviter les erreurs de routes non trouvées #}
+    <a href="/collector_website/public/index.php/">accueil</a>
+    <a href="/collector_website/public/index.php/vinyl">vinyles</a>
+    <a href="/collector_website/public/index.php/cd">cd</a>
+    <a href="/collector_website/public/index.php/art">objets arts</a>
+    
+    {% if not app.user %}
+        <a href="/collector_website/public/index.php/register" class="btn-inscription">inscription</a>
+        <a href="/collector_website/public/index.php/login" class="btn-connexion">connexion</a>
+    {% else %}
+
+        {# Le petit personnage pour ton profil #}
+        <a href="/collector_website/public/index.php/profile" title="Mon Profil" style="text-decoration: none; font-size: 20px;">👤</a>
+        <a href="/collector_website/public/index.php/logout" class="btn-connexion">déconnexion</a>
+    {% endif %}
+    
+    <a href="/collector_website/public/index.php/cart" class="cart-icon">🛒</a>
+</div>
+        </nav>
+
+
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

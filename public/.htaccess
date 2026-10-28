@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Si le fichier ou le dossier existe vraiment, on l'affiche normalement
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # Sinon, on envoie tout vers Symfony
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>

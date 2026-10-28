@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div style="background-color: #000; color: white; padding: 50px; min-height: 100vh;">
+    <div style="border: 2px solid #d4af37; padding: 30px; border-radius: 15px; display: flex; gap: 50px;">
+        
+        <div>
+            <img src="{{ asset('images/products/' ~ product.imageName) }}" style="width: 400px; border-radius: 10px; border: 1px solid #d4af37;">
+        </div>
+
+        <div style="flex: 1;">
+            <h1 style="color: #d4af37; font-size: 3rem; margin-top: 0;">{{ product.title }}</h1>
+            <h2 style="font-size: 2.5rem; margin: 20px 0;">{{ product.price }} €</h2>
+            
+            <div style="margin-top: 30px;">
+                <h3 style="color: #d4af37;">Description :</h3>
+                <p style="font-size: 1.2rem; line-height: 1.6; color: #ccc;">{{ product.description }}</p>
+            </div>
+
+            <div style="margin-top: 40px;">
+                <a href="#" style="background: #d4af37; color: black; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 5px;">
+                    AJOUTER AU PANIER
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil - Collect'OR{% endblock %}
+
+{% block body %}
+<style>
+    .profile-container {
+        color: white;
+        padding-top: 50px;
+    }
+    .gold-text {
+        color: #d4af37;
+    }
+    .profile-card {
+        background-color: #000;
+        border: 1px solid #d4af37;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    .table-custom {
+        color: white;
+    }
+    .table-custom thead th {
+        color: #d4af37;
+        border-bottom: 1px solid #d4af37;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+    }
+    .table-custom td {
+        border-bottom: 1px solid #222;
+        padding: 12px 0;
+    }
+    .order-ref {
+        color: #d4af37;
+        text-decoration: none;
+    }
+</style>
+
+<div class="container profile-container">
+    {# En-tête sans avatar #}
+    <h1 class="display-5 fw-bold mb-5">Bonjour, <span class="gold-text">{{ app.user.userIdentifier }}</span></h1>
+
+    <div class="row">
+        {# Section Mes Commandes #}
+        <div class="col-md-7">
+            <div class="profile-card">
+                <h3 class="mb-4">📦 Mes Commandes</h3>
+                <p class="text-muted mb-4">Consultez l'historique de vos acquisitions rares.</p>
+                
+                <table class="table table-custom">
+                    <thead>
+                        <tr>
+                            <th>Ref</th>
+                            <th>Date</th>
+                            <th>Prix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td class="order-ref">#{{ order.id }}</td>
+                                <td>{{ order.createdAt ? order.createdAt|date('d/m/Y') : 'N/A' }}</td>
+                                {# On garde .total comme sur ta capture fonctionnelle #}
+                                <td class="fw-bold">{{ order.total }} €</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center py-4 text-muted">Aucune commande effectuée pour le moment.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {# Section Recommandations #}
+        <div class="col-md-5">
+            <div class="profile-card">
+                <h3 class="mb-4">✨ Recommandations</h3>
+                <p class="text-muted mb-4">Basé sur vos goûts musicaux.</p>
+                <div class="py-4">
+                    <p>Nous vous suggérerons de nouveaux vinyles bientôt !</p>
+                </div>
+            </div>
+            
+            <div class="mt-3">
+                <a href="{{ path('app_logout') }}" class="btn btn-outline-danger w-100">Se déconnecter</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

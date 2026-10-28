@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier - Collect'OR{% endblock %}
+
+{% block body %}
+<style>
+    .cart-container { background-color: #000; color: #fff; min-height: 100vh; padding: 50px 0; font-family: sans-serif; }
+    .cart-card { border: 1px solid #d4af37; border-radius: 15px; background: #0a0a0a; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); max-width: 1000px; margin: auto; }
+    .gold-title { color: #d4af37; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 40px; text-align: center; }
+    
+    .table-cart { width: 100%; border-collapse: separate; border-spacing: 0 15px; }
+    .table-cart th { color: #d4af37; border-bottom: 1px solid #333; padding: 10px; text-transform: uppercase; font-size: 0.8rem; }
+    .table-cart td { background: #111; padding: 20px; vertical-align: middle; }
+
+    .qty-btn { color: #d4af37; text-decoration: none; font-weight: bold; padding: 0 10px; font-size: 1.2rem; border: 1px solid #d4af37; border-radius: 5px; margin: 0 5px; }
+    .btn-delete { color: #ff4444; text-decoration: none; font-size: 0.9rem; }
+    
+    .total-section { border-top: 2px solid #d4af37; margin-top: 30px; padding-top: 20px; text-align: right; }
+    .total-price { font-size: 2rem; color: #d4af37; font-weight: bold; }
+
+    .cart-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; }
+    .btn-gold { background: #d4af37; color: #000 !important; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-weight: bold; transition: 0.3s; }
+    .btn-gold:hover { background: #fff; }
+</style>
+
+<div class="cart-container">
+    <div class="container">
+        <div class="cart-card">
+            <h1 class="gold-title">🛒 Votre Panier</h1>
+
+            {% if items|length > 0 %}
+                <table class="table-cart">
+                    <thead>
+                        <tr>
+                            <th>Produit</th>
+                            <th class="text-center">Prix</th>
+                            <th class="text-center">Quantité</th>
+                            <th class="text-center">Total</th>
+                            <th class="text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                            <tr>
+                                <td><span class="fw-bold">{{ item.product.title }}</span></td>
+                                <td class="text-center">{{ item.product.price }} €</td>
+                                <td class="text-center">
+                                    {# Utilisation des routes réelles de ton terminal #}
+                                    <a href="{{ path('app_cart_decrement', {'id': item.product.id}) }}" class="qty-btn">-</a>
+                                    <span class="mx-2">{{ item.quantity }}</span>
+                                    <a href="{{ path('app_cart_add', {'id': item.product.id}) }}" class="qty-btn">+</a>
+                                </td>
+                                <td class="text-center">{{ (item.product.price * item.quantity) }} €</td>
+                                <td class="text-right">
+                                    {# Route de suppression confirmée #}
+                                    <a href="{{ path('app_cart_delete', {'id': item.product.id}) }}" class="btn-delete">🗑️ Supprimer</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="total-section">
+                    <span style="margin-right: 20px;">Total :</span>
+                    <span class="total-price">{{ total }} €</span>
+                </div>
+
+                <div class="cart-actions">
+                    <a href="{{ path('app_product_index') }}" style="color: #ccc; text-decoration: none;">← Continuer mes achats</a>
+                    {# Route checkout confirmée #}
+                    <a href="{{ path('app_cart_checkout') }}" class="btn-gold">VALIDER LA COMMANDE</a>
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <p>Votre panier est vide.</p>
+                    <a href="{{ path('app_product_index') }}" class="btn-gold">Voir les produits</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
